@@ -17,13 +17,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.EvaCardsPack">
+        android:theme="@style/Theme.EvaCardsPack"
+        tools:ignore="MissingBanner">
 
         <activity
             android:name=".EvaCardActivity"
-            android:banner="@mipmap/ic_launcher"
             android:exported="true"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/ic_weather_banner"
             android:label="Eva Cards Pack">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
