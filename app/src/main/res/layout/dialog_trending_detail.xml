@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="520dp"
+    android:layout_height="wrap_content"
+    android:background="#1E293B"
+    android:orientation="vertical"
+    android:padding="28dp">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="Trending"
+            android:src="@drawable/ic_trending_banner" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/trendingHeaderTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Top 5 Trending Movies"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/trendingHeaderSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Press OK to toggle between Movies and TV Shows"
+                android:textColor="#94A3B8"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="16dp"
+        android:background="#334155" />
+
+    <!-- List Items -->
+    <LinearLayout
+        android:id="@+id/trendingListContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Item 1 -->
+        <TextView
+            android:id="@+id/trendingItem1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="6dp"
+            android:text="1. 🍿 Interstellar (2014) — ⭐ 8.7/10"
+            android:textColor="#EAB308"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <!-- Item 2 -->
+        <TextView
+            android:id="@+id/trendingItem2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="6dp"
+            android:text="2. 🏜️ Dune: Part Two (2024) — ⭐ 8.5/10"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
+
+        <!-- Item 3 -->
+        <TextView
+            android:id="@+id/trendingItem3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="6dp"
+            android:text="3. ⚛️ Oppenheimer (2023) — ⭐ 8.9/10"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
+
+        <!-- Item 4 -->
+        <TextView
+            android:id="@+id/trendingItem4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="6dp"
+            android:text="4. 🦇 The Dark Knight (2008) — ⭐ 9.0/10"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
+
+        <!-- Item 5 -->
+        <TextView
+            android:id="@+id/trendingItem5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="6dp"
+            android:text="5. 🌀 Inception (2010) — ⭐ 8.8/10"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnToggleTrendingType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:backgroundTint="#EAB308"
+            android:focusable="true"
+            android:text="Switch to TV Shows 📺"
+            android:textColor="#0F172A"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnCloseTrending"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#334155"
+            android:focusable="true"
+            android:text="Close"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
+
+</LinearLayout>

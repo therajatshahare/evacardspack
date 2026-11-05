@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="520dp"
+    android:layout_height="wrap_content"
+    android:background="#1E293B"
+    android:orientation="vertical"
+    android:padding="28dp">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="Clock"
+            android:src="@drawable/ic_clock_banner" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="World Time Comparisons"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Live timezones across major cities"
+                android:textColor="#94A3B8"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="16dp"
+        android:background="#334155" />
+
+    <!-- Clocks Grid -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Washington D.C. -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="🇺🇸 Washington D.C. (EDT):"
+                android:textColor="#94A3B8"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/dcTimeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="03:31:15 PM"
+                android:textColor="#4ADE80"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- London -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="🇬🇧 London (GMT/BST):"
+                android:textColor="#94A3B8"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/londonTimeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="07:31:15 PM"
+                android:textColor="#4ADE80"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Seoul -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="🇰🇷 Seoul (KST):"
+                android:textColor="#94A3B8"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/seoulTimeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="04:31:15 AM"
+                android:textColor="#4ADE80"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Bangkok -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="🇹🇭 Bangkok (ICT):"
+                android:textColor="#94A3B8"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/bangkokTimeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="02:31:15 AM"
+                android:textColor="#4ADE80"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnCloseClock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#4ADE80"
+        android:focusable="true"
+        android:text="Close"
+        android:textColor="#0F172A" />
+
+</LinearLayout>
