@@ -1,11 +1,10 @@
-package io.rns.evacardspack.clock;
+package io.rns.evacardspack;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import io.rns.evacardspack.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

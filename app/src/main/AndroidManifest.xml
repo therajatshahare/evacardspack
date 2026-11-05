@@ -14,9 +14,60 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EvaCardsPack"
-        tools:ignore="MissingBanner" />
+        tools:ignore="MissingBanner">
+
+        <activity
+            android:name=".WeatherCardActivity"
+            android:exported="true"
+            android:icon="@drawable/ic_weather_banner"
+            android:label="Weather Live"
+            tools:ignore="MissingBanner">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+                <category android:name="io.rns.evalauncher.category.DOCK_CARD" />
+            </intent-filter>
+            <meta-data
+                android:name="io.rns.evalauncher.card"
+                android:resource="@xml/card_weather_spec" />
+        </activity>
+
+        <activity
+            android:name=".ClockCardActivity"
+            android:exported="true"
+            android:icon="@drawable/ic_clock_banner"
+            android:label="Minimal Clock"
+            tools:ignore="MissingBanner">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+                <category android:name="io.rns.evalauncher.category.DOCK_CARD" />
+            </intent-filter>
+            <meta-data
+                android:name="io.rns.evalauncher.card"
+                android:resource="@xml/card_clock_spec" />
+        </activity>
+
+        <activity
+            android:name=".TrendingMoviesCardActivity"
+            android:exported="true"
+            android:icon="@drawable/ic_trending_banner"
+            android:label="Trending Movies"
+            tools:ignore="MissingBanner">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+                <category android:name="io.rns.evalauncher.category.DOCK_CARD" />
+            </intent-filter>
+            <meta-data
+                android:name="io.rns.evalauncher.card"
+                android:resource="@xml/card_trending_spec" />
+        </activity>
+
+    </application>
 
 </manifest>

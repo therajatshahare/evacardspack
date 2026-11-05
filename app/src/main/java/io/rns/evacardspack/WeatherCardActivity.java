@@ -1,8 +1,7 @@
-package io.rns.evacardspack.weather;
+package io.rns.evacardspack;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import io.rns.evacardspack.R;
 
 public class WeatherCardActivity extends AppCompatActivity {
 
