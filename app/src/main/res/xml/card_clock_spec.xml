@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<card xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:spec="1"
-    app:label="Minimal Clock"
-    app:caption="07:30 PM · Sunday"
-    app:accent="#FF4ADE80" />
+<card
+    spec="1"
+    label="Minimal Clock"
+    caption="07-30 PM - Sunday"
+    accent="#FF4ADE80" />

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<card xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:spec="1"
-    app:label="Weather Live"
-    app:caption="26°C Sunny · Nagpur"
-    app:accent="#FF3B82F6" />
+<card
+    spec="1"
+    label="Weather Live"
+    caption="26C Sunny - Nagpur"
+    accent="#FF3B82F6" />

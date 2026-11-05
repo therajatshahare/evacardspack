@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<card xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:spec="1"
-    app:label="Trending Movies"
-    app:caption="Top Pick: Interstellar"
-    app:accent="#FFEAB308" />
+<card
+    spec="1"
+    label="Trending Movies"
+    caption="Top Pick - Interstellar"
+    accent="#FFEAB308" />
