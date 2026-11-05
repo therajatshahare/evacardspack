@@ -12,10 +12,29 @@ android {
         applicationId = "io.rns.evacardspack"
         minSdk = 26
         targetSdk = 37
-        versionCode = 6
-        versionName = "0.2.3"
+        versionCode = 7
+        versionName = "0.3.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    flavorDimensions += "card"
+    productFlavors {
+        create("weather") {
+            dimension = "card"
+            applicationId = "io.rns.evacardspack.weather"
+            versionNameSuffix = "-weather"
+        }
+        create("clock") {
+            dimension = "card"
+            applicationId = "io.rns.evacardspack.clock"
+            versionNameSuffix = "-clock"
+        }
+        create("trending") {
+            dimension = "card"
+            applicationId = "io.rns.evacardspack.trending"
+            versionNameSuffix = "-trending"
+        }
     }
 
     buildTypes {

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:label="Trending Movies">
+
+        <activity
+            android:name=".trending.TrendingMoviesCardActivity"
+            android:exported="true"
+            android:icon="@drawable/ic_trending_banner"
+            android:label="Trending Movies">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+                <category android:name="io.rns.evalauncher.category.DOCK_CARD" />
+            </intent-filter>
+            <meta-data
+                android:name="io.rns.evalauncher.card"
+                android:resource="@xml/card_trending_spec" />
+        </activity>
+
+    </application>
+
+</manifest>
