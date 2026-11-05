@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class ClockCardActivity extends AppCompatActivity {
+public class EvaCardActivity extends AppCompatActivity {
 
     private TextView clockTimeText;
     private TextView clockDateText;
@@ -26,7 +26,7 @@ public class ClockCardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_clock_card);
+        setContentView(R.layout.activity_eva_card);
 
         clockTimeText = findViewById(R.id.clockTimeText);
         clockDateText = findViewById(R.id.clockDateText);
