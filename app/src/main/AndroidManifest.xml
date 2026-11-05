@@ -20,11 +20,11 @@
         android:theme="@style/Theme.EvaCardsPack">
 
         <activity
-            android:name=".WeatherCardActivity"
-            android:banner="@drawable/ic_weather_banner"
+            android:name=".EvaCardActivity"
+            android:banner="@mipmap/ic_launcher"
             android:exported="true"
-            android:icon="@drawable/ic_weather_banner"
-            android:label="Weather Live">
+            android:icon="@mipmap/ic_launcher"
+            android:label="Eva Cards Pack">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
@@ -32,39 +32,7 @@
             </intent-filter>
             <meta-data
                 android:name="io.rns.evalauncher.card"
-                android:resource="@xml/card_weather_spec" />
-        </activity>
-
-        <activity
-            android:name=".ClockCardActivity"
-            android:banner="@drawable/ic_clock_banner"
-            android:exported="true"
-            android:icon="@drawable/ic_clock_banner"
-            android:label="Minimal Clock">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
-                <category android:name="io.rns.evalauncher.category.DOCK_CARD" />
-            </intent-filter>
-            <meta-data
-                android:name="io.rns.evalauncher.card"
-                android:resource="@xml/card_clock_spec" />
-        </activity>
-
-        <activity
-            android:name=".TrendingMoviesCardActivity"
-            android:banner="@drawable/ic_trending_banner"
-            android:exported="true"
-            android:icon="@drawable/ic_trending_banner"
-            android:label="Trending Movies">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
-                <category android:name="io.rns.evalauncher.category.DOCK_CARD" />
-            </intent-filter>
-            <meta-data
-                android:name="io.rns.evalauncher.card"
-                android:resource="@xml/card_trending_spec" />
+                android:resource="@xml/card_spec" />
         </activity>
 
     </application>
