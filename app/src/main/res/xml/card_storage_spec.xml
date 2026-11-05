@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<card
+    spec="1"
+    label="System Monitor"
+    caption="RAM 62% - Storage 45%"
+    accent="#FF8B5CF6" />
