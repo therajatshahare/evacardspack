@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Live status widgets for Eva TV Launcher Home Screen"
+        android:text="Use TV Remote D-Pad (Left/Right) to navigate between widgets"
         android:textColor="#94A3B8"
         android:textSize="16sp" />
 
@@ -34,12 +34,18 @@
 
         <!-- Weather Card Panel -->
         <LinearLayout
+            android:id="@+id/panelWeatherCard"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="12dp"
             android:layout_weight="1"
-            android:background="#1E293B"
+            android:background="@drawable/card_selector"
+            android:clickable="true"
+            android:descendantFocusability="blocksDescendants"
+            android:focusable="true"
             android:gravity="center"
+            android:nextFocusLeft="@+id/panelWeatherCard"
+            android:nextFocusRight="@+id/panelClockCard"
             android:orientation="vertical"
             android:padding="20dp">
 
@@ -77,13 +83,19 @@
 
         <!-- Minimal Clock Card Panel -->
         <LinearLayout
+            android:id="@+id/panelClockCard"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="6dp"
             android:layout_marginEnd="6dp"
             android:layout_weight="1"
-            android:background="#1E293B"
+            android:background="@drawable/card_selector"
+            android:clickable="true"
+            android:descendantFocusability="blocksDescendants"
+            android:focusable="true"
             android:gravity="center"
+            android:nextFocusLeft="@+id/panelWeatherCard"
+            android:nextFocusRight="@+id/panelTrendingCard"
             android:orientation="vertical"
             android:padding="20dp">
 
@@ -123,12 +135,18 @@
 
         <!-- Trending Movies Card Panel -->
         <LinearLayout
+            android:id="@+id/panelTrendingCard"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="12dp"
             android:layout_weight="1"
-            android:background="#1E293B"
+            android:background="@drawable/card_selector"
+            android:clickable="true"
+            android:descendantFocusability="blocksDescendants"
+            android:focusable="true"
             android:gravity="center"
+            android:nextFocusLeft="@+id/panelClockCard"
+            android:nextFocusRight="@+id/panelTrendingCard"
             android:orientation="vertical"
             android:padding="20dp">
 
