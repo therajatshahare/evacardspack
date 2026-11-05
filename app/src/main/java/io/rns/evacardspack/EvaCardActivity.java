@@ -80,6 +80,9 @@ public class EvaCardActivity extends AppCompatActivity {
         }
 
         refreshSystemStats();
+
+        // Check for GitHub updates asynchronously
+        new UpdateManager().checkForUpdates(this);
     }
 
     private void setupPanelFocusAndClick(View panel, Runnable onClick) {
