@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="card">
+        <attr name="spec" format="string|integer" />
+        <attr name="label" format="string" />
+        <attr name="caption" format="string" />
+        <attr name="accent" format="string|color" />
+    </declare-styleable>
+</resources>
