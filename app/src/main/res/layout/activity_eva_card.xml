@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Live status widgets for Eva TV Launcher"
+        android:text="Select a Card using TV Remote OK button to activate it for Eva Launcher Home Screen"
         android:textColor="#94A3B8"
         android:textSize="16sp" />
 
@@ -32,20 +32,37 @@
         android:baselineAligned="false"
         android:orientation="horizontal">
 
-        <!-- Weather Card -->
+        <!-- Weather Card Panel -->
         <LinearLayout
+            android:id="@+id/panelWeatherCard"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="12dp"
             android:layout_weight="1"
-            android:background="#1E293B"
+            android:background="@drawable/card_selector"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="20dp">
 
+            <TextView
+                android:id="@+id/badgeWeather"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#3B82F6"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:text="ACTIVE CARD"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
             <ImageView
                 android:layout_width="56dp"
                 android:layout_height="56dp"
+                android:layout_marginTop="8dp"
                 android:contentDescription="Weather"
                 android:src="@drawable/ic_weather_banner" />
 
@@ -75,21 +92,38 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
-        <!-- Minimal Clock Card -->
+        <!-- Minimal Clock Card Panel -->
         <LinearLayout
+            android:id="@+id/panelClockCard"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="6dp"
             android:layout_marginEnd="6dp"
             android:layout_weight="1"
-            android:background="#1E293B"
+            android:background="@drawable/card_selector"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="20dp">
 
+            <TextView
+                android:id="@+id/badgeClock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#4ADE80"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:text="ACTIVE CARD"
+                android:textColor="#0F172A"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
             <ImageView
                 android:layout_width="56dp"
                 android:layout_height="56dp"
+                android:layout_marginTop="8dp"
                 android:contentDescription="Clock"
                 android:src="@drawable/ic_clock_banner" />
 
@@ -121,20 +155,37 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
-        <!-- Trending Movies Card -->
+        <!-- Trending Movies Card Panel -->
         <LinearLayout
+            android:id="@+id/panelTrendingCard"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="12dp"
             android:layout_weight="1"
-            android:background="#1E293B"
+            android:background="@drawable/card_selector"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="20dp">
 
+            <TextView
+                android:id="@+id/badgeTrending"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#EAB308"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:text="ACTIVE CARD"
+                android:textColor="#0F172A"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
             <ImageView
                 android:layout_width="56dp"
                 android:layout_height="56dp"
+                android:layout_marginTop="8dp"
                 android:contentDescription="Trending"
                 android:src="@drawable/ic_trending_banner" />
 
