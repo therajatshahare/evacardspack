@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="0dp"
-    android:layout_height="56dp"
+    android:layout_height="44dp"
     android:layout_margin="1dp"
     android:layout_weight="1"
     android:background="#0F172A"
     android:gravity="top|start"
     android:orientation="vertical"
-    android:padding="4dp">
+    android:padding="3dp">
 
     <TextView
         android:id="@+id/cellDayNum"
@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:text="1"
         android:textColor="#F8FAFC"
-        android:textSize="12sp"
+        android:textSize="11sp"
         android:textStyle="bold" />
 
     <TextView
