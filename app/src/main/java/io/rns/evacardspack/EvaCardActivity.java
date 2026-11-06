@@ -21,6 +21,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -35,6 +37,7 @@ public class EvaCardActivity extends AppCompatActivity {
     private TextView dashboardStorageText;
 
     private boolean isShowingTvShows = false;
+    private int currentCalendarMonth = Calendar.MAY; // Default to May or Current Month
 
     // World Clock Dialog Views
     private Dialog clockDialog;
@@ -184,15 +187,140 @@ public class EvaCardActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    // 4. Buddhist & Neo-Buddhist Calendar Detail Dialog
+    // 4. Buddhist & Neo-Buddhist 12-Month Interactive Calendar Dialog
     private void showCalendarDetailDialog() {
         Dialog dialog = createStyledDialog(R.layout.dialog_calendar_detail);
+
+        TextView monthTitleText = dialog.findViewById(R.id.monthTitleText);
+        TextView monthSubTitleText = dialog.findViewById(R.id.monthSubTitleText);
+        LinearLayout eventsContainer = dialog.findViewById(R.id.calendarEventsContainer);
+        Button btnPrevMonth = dialog.findViewById(R.id.btnPrevMonth);
+        Button btnNextMonth = dialog.findViewById(R.id.btnNextMonth);
         Button btnClose = dialog.findViewById(R.id.btnCloseCalendar);
+
+        Calendar cal = Calendar.getInstance();
+        currentCalendarMonth = cal.get(Calendar.MONTH);
+
+        Runnable renderMonthEvents = () -> {
+            if (eventsContainer == null) return;
+            eventsContainer.removeAllViews();
+
+            String[] monthNames = {"JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
+                    "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"};
+
+            if (monthTitleText != null) {
+                monthTitleText.setText(monthNames[currentCalendarMonth] + " 2026");
+            }
+
+            List<String> events = getBuddhistEventsForMonth(currentCalendarMonth);
+            if (monthSubTitleText != null) {
+                monthSubTitleText.setText(events.size() + " Dhamma & Historic Events");
+            }
+
+            for (String eventText : events) {
+                TextView tv = new TextView(this);
+                tv.setText(eventText);
+                tv.setTextSize(14);
+                tv.setPadding(0, 8, 0, 8);
+                if (eventText.startsWith("☸️★") || eventText.contains("Buddha Purnima") || eventText.contains("Dhammachakra")) {
+                    tv.setTextColor(Color.parseColor("#F59E0B")); // Amber
+                    tv.setTypeface(null, android.graphics.Typeface.BOLD);
+                } else {
+                    tv.setTextColor(Color.parseColor("#F8FAFC"));
+                }
+                eventsContainer.addView(tv);
+            }
+        };
+
+        renderMonthEvents.run();
+
+        if (btnPrevMonth != null) {
+            btnPrevMonth.setOnClickListener(v -> {
+                currentCalendarMonth = (currentCalendarMonth - 1 + 12) % 12;
+                renderMonthEvents.run();
+            });
+            btnPrevMonth.requestFocus();
+        }
+
+        if (btnNextMonth != null) {
+            btnNextMonth.setOnClickListener(v -> {
+                currentCalendarMonth = (currentCalendarMonth + 1) % 12;
+                renderMonthEvents.run();
+            });
+        }
+
         if (btnClose != null) {
             btnClose.setOnClickListener(v -> dialog.dismiss());
-            btnClose.requestFocus();
         }
+
         dialog.show();
+    }
+
+    private List<String> getBuddhistEventsForMonth(int month) {
+        List<String> list = new ArrayList<>();
+        switch (month) {
+            case Calendar.JANUARY:
+                list.add("☸️ 1 Jan — New Year Dhamma Vandana & World Peace Day");
+                list.add("☸️ 15 Jan — Duruthu Poya (Buddha's First Visit to Sri Lanka)");
+                list.add("☸️ 26 Jan — Republic Day & Babasaheb Ambedkar's Constitutional Legacy");
+                break;
+            case Calendar.FEBRUARY:
+                list.add("☸️★ Magha Purnima (Full Moon) — Assembly of 1,250 Arahants at Veluvana");
+                list.add("☸️ Ovada Patimokkha Discourse by Gautama Buddha");
+                list.add("☸️ Venerable Sariputta Mahathera Parinirvana Memorial Day");
+                break;
+            case Calendar.MARCH:
+                list.add("☸️ 15 Mar — Samata Sainik Dal Foundation Day (Dr. B. R. Ambedkar, 1927)");
+                list.add("☸️★ 20 Mar — Mahad Satyagraha Day (Water Rights & Social Equality)");
+                list.add("☸️ Medin Poya — Buddha's First Return Visit to Kapilavastu");
+                break;
+            case Calendar.APRIL:
+                list.add("☸️★ 14 Apr — Dr. B. R. Ambedkar Jayanti (Birth Anniversary of Babasaheb)");
+                list.add("☸️ Bak Poya — Buddha's Second Visit to Sri Lanka");
+                list.add("☸️ Chaitra Full Moon Sacred Dhamma Vandana");
+                break;
+            case Calendar.MAY:
+                list.add("☸️★ Buddha Purnima (Vesak Full Moon) — Birth, Enlightenment & Parinirvana of Gautama Buddha");
+                list.add("☸️ 27 May — Ramabai Ambedkar Memorial Day");
+                list.add("☸️ Vesak International Dhamma Week");
+                break;
+            case Calendar.JUNE:
+                list.add("☸️ Poson Poya — Arrival of Arahant Mahinda & Establishment of Dhamma in Lanka");
+                list.add("☸️ 20 Jun — Siddharth College Foundation Day (Dr. B. R. Ambedkar, Mumbai 1946)");
+                list.add("☸️ Great Renunciation (Mahabhinishkramana) Memorial");
+                break;
+            case Calendar.JULY:
+                list.add("☸️★ Asalha Puja (Dhamma Day Full Moon) — First Sermon at Sarnath (Dhammacakkappavattana Sutta)");
+                list.add("☸️ Commencement of Vassa (Rains Retreat for Sangha)");
+                list.add("☸️ Conception of Bodhisattva Siddhattha");
+                break;
+            case Calendar.AUGUST:
+                list.add("☸️ Nikini Poya — Convocation of the First Buddhist Council at Rajgir");
+                list.add("☸️ Ven. Mahakassapa & Ven. Ananda Preservation of Tipitaka");
+                list.add("☸️ Mid-Vassa Meditation & Dhamma Study Season");
+                break;
+            case Calendar.SEPTEMBER:
+                list.add("☸️ Madhu Purnima (Honey Full Moon) — Festival of Unity & Parileyyaka Offering");
+                list.add("☸️ Rahula Day — Novice Ordination Anniversary");
+                list.add("☸️ 24 Sep — Poona Pact Historic Day (1932)");
+                break;
+            case Calendar.OCTOBER:
+                list.add("☸️★ 14 Oct — Dhammachakra Pravartan Din (Deekshabhoomi, Nagpur Mass Conversion 1956)");
+                list.add("☸️ Pavarana Poya — End of Vassa (Rains Retreat)");
+                list.add("☸️ Commencement of Kathina Civara Dana Season");
+                break;
+            case Calendar.NOVEMBER:
+                list.add("☸️ Kathina Civara Dana — Robe Offering Festival & Sangha Support");
+                list.add("☸️ Il Poya — Commissioning of First 60 Arahant Missionaries by Buddha");
+                list.add("☸️ 26 Nov — Constitution Day of India (Drafted by Dr. B. R. Ambedkar)");
+                break;
+            case Calendar.DECEMBER:
+                list.add("☸️★ 6 Dec — Mahaparinirvan Din (Memorial Day of Bodhisattva Dr. B. R. Ambedkar)");
+                list.add("☸️ 15 Dec — Sanghamitta Day (Arrival of Sacred Bodhi Sapling)");
+                list.add("☸️ Unduvap Poya — Plant of Sacred Sri Maha Bodhi Tree");
+                break;
+        }
+        return list;
     }
 
     private Dialog createStyledDialog(int layoutResId) {

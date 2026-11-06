@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="540dp"
+    android:layout_width="560dp"
     android:layout_height="wrap_content"
     android:background="#1E293B"
     android:orientation="vertical"
     android:padding="28dp">
 
-    <!-- Header -->
+    <!-- Header & Month Navigation Bar -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,15 +14,15 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
             android:contentDescription="Calendar"
             android:src="@drawable/ic_calendar_banner" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="12dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -31,88 +31,83 @@
                 android:layout_height="wrap_content"
                 android:text="Buddhist &amp; Neo-Buddhist Calendar"
                 android:textColor="#FFFFFF"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/monthSubTitleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Important festivals, sacred days, and historic anniversaries"
+                android:text="Select month using D-Pad"
                 android:textColor="#94A3B8"
                 android:textSize="13sp" />
         </LinearLayout>
 
     </LinearLayout>
 
+    <!-- Month Navigation Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnPrevMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#334155"
+            android:focusable="true"
+            android:nextFocusLeft="@+id/btnPrevMonth"
+            android:nextFocusRight="@+id/btnNextMonth"
+            android:nextFocusDown="@+id/btnCloseCalendar"
+            android:paddingHorizontal="16dp"
+            android:text="&lt; Prev"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/monthTitleText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="MAY 2026"
+            android:textColor="#F59E0B"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnNextMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#334155"
+            android:focusable="true"
+            android:nextFocusLeft="@+id/btnPrevMonth"
+            android:nextFocusRight="@+id/btnNextMonth"
+            android:nextFocusDown="@+id/btnCloseCalendar"
+            android:paddingHorizontal="16dp"
+            android:text="Next &gt;"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginVertical="16dp"
+        android:layout_marginVertical="14dp"
         android:background="#334155" />
 
-    <!-- Festivals List -->
+    <!-- Events List Container -->
     <LinearLayout
+        android:id="@+id/calendarEventsContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingVertical="5dp"
-            android:text="☸️ Buddha Purnima (Vesak) — Birth, Enlightenment &amp; Parinirvana"
-            android:textColor="#F59E0B"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingVertical="5dp"
-            android:text="☸️ Dhammachakra Pravartan Din — Deekshabhoomi, Nagpur (14 Oct)"
-            android:textColor="#F59E0B"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingVertical="5dp"
-            android:text="☸️ Dr. B. R. Ambedkar Jayanti — Birth Anniversary (14 April)"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingVertical="5dp"
-            android:text="☸️ Mahaparinirvan Din — Babasaheb Memorial Day (6 Dec)"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingVertical="5dp"
-            android:text="☸️ Asalha Puja (Dhamma Day) — First Sermon at Sarnath"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingVertical="5dp"
-            android:text="☸️ Kathina Civara Dana — Robe Offering Season"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingVertical="5dp"
-            android:text="☸️ Sanghamitta Day — Arrival of Sacred Bodhi Sapling (15 Dec)"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp" />
+        <!-- Dynamic Month Events will be populated here -->
 
     </LinearLayout>
 
