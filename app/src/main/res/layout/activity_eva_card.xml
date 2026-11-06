@@ -8,22 +8,52 @@
     android:orientation="vertical"
     android:padding="32dp">
 
-    <!-- Header -->
-    <TextView
-        android:layout_width="wrap_content"
+    <!-- Header Bar with Title and Check Updates Button -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Eva Cards Pack Dashboard"
-        android:textColor="#F8FAFC"
-        android:textSize="26sp"
-        android:textStyle="bold" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="Use TV Remote D-Pad (Left/Right) to navigate between widgets"
-        android:textColor="#94A3B8"
-        android:textSize="15sp" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Eva Cards Pack Dashboard"
+                android:textColor="#F8FAFC"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Use TV Remote D-Pad (Left/Right) to navigate between widgets"
+                android:textColor="#94A3B8"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnCheckUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:backgroundTint="#334155"
+            android:focusable="true"
+            android:nextFocusLeft="@+id/btnCheckUpdate"
+            android:nextFocusRight="@+id/btnCheckUpdate"
+            android:nextFocusDown="@+id/panelWeatherCard"
+            android:paddingHorizontal="16dp"
+            android:text="🔄 Check Updates"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
 
     <!-- Cards Row (5 Columns) with clipChildren=false and padding for focus border -->
     <LinearLayout
@@ -50,6 +80,7 @@
             android:descendantFocusability="blocksDescendants"
             android:focusable="true"
             android:gravity="center"
+            android:nextFocusUp="@+id/btnCheckUpdate"
             android:nextFocusLeft="@+id/panelWeatherCard"
             android:nextFocusRight="@+id/panelClockCard"
             android:orientation="vertical"
@@ -100,6 +131,7 @@
             android:descendantFocusability="blocksDescendants"
             android:focusable="true"
             android:gravity="center"
+            android:nextFocusUp="@+id/btnCheckUpdate"
             android:nextFocusLeft="@+id/panelWeatherCard"
             android:nextFocusRight="@+id/panelTrendingCard"
             android:orientation="vertical"
@@ -152,6 +184,7 @@
             android:descendantFocusability="blocksDescendants"
             android:focusable="true"
             android:gravity="center"
+            android:nextFocusUp="@+id/btnCheckUpdate"
             android:nextFocusLeft="@+id/panelClockCard"
             android:nextFocusRight="@+id/panelCalendarCard"
             android:orientation="vertical"
@@ -202,6 +235,7 @@
             android:descendantFocusability="blocksDescendants"
             android:focusable="true"
             android:gravity="center"
+            android:nextFocusUp="@+id/btnCheckUpdate"
             android:nextFocusLeft="@+id/panelTrendingCard"
             android:nextFocusRight="@+id/panelSystemMonitorCard"
             android:orientation="vertical"
@@ -252,6 +286,7 @@
             android:descendantFocusability="blocksDescendants"
             android:focusable="true"
             android:gravity="center"
+            android:nextFocusUp="@+id/btnCheckUpdate"
             android:nextFocusLeft="@+id/panelCalendarCard"
             android:nextFocusRight="@+id/panelSystemMonitorCard"
             android:orientation="vertical"

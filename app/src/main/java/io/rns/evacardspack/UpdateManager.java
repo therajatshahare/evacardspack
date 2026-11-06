@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.view.Window;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -34,6 +33,14 @@ public class UpdateManager {
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public void checkForUpdates(Activity activity) {
+        checkForUpdates(activity, false);
+    }
+
+    public void checkForUpdates(Activity activity, boolean isManualCheck) {
+        if (isManualCheck) {
+            Toast.makeText(activity, "Checking for updates...", Toast.LENGTH_SHORT).show();
+        }
+
         executor.execute(() -> {
             try {
                 URL url = new URL(LATEST_RELEASE_URL);
@@ -41,10 +48,11 @@ public class UpdateManager {
                 conn.setRequestMethod("GET");
                 conn.setRequestProperty("Accept", "application/vnd.github.v3+json");
                 conn.setRequestProperty("User-Agent", "EvaCardsPack");
-                conn.setConnectTimeout(5000);
-                conn.setReadTimeout(5000);
+                conn.setConnectTimeout(8000);
+                conn.setReadTimeout(8000);
 
-                if (conn.getResponseCode() == 200) {
+                int responseCode = conn.getResponseCode();
+                if (responseCode == 200) {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                     StringBuilder sb = new StringBuilder();
                     String line;
@@ -82,9 +90,22 @@ public class UpdateManager {
                         if (!downloadUrl.isEmpty()) {
                             activity.runOnUiThread(() -> showUpdateDialog(activity, finalTagName, finalBody, finalDownloadUrl));
                         }
+                    } else if (isManualCheck) {
+                        activity.runOnUiThread(() ->
+                            Toast.makeText(activity, "You are on the latest version (v" + currentVersion + ")", Toast.LENGTH_LONG).show()
+                        );
                     }
+                } else if (isManualCheck) {
+                    activity.runOnUiThread(() ->
+                        Toast.makeText(activity, "Server returned " + responseCode, Toast.LENGTH_SHORT).show()
+                    );
                 }
-            } catch (Exception ignored) {
+            } catch (Exception e) {
+                if (isManualCheck) {
+                    activity.runOnUiThread(() ->
+                        Toast.makeText(activity, "Update check failed: " + e.getMessage(), Toast.LENGTH_SHORT).show()
+                    );
+                }
             }
         });
     }
@@ -155,9 +176,20 @@ public class UpdateManager {
                 URL url = new URL(downloadUrl);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
-                conn.setConnectTimeout(10000);
-                conn.setReadTimeout(10000);
+                conn.setConnectTimeout(15000);
+                conn.setReadTimeout(15000);
+                conn.setInstanceFollowRedirects(true);
                 conn.connect();
+
+                // Handle redirects if HTTP 301/302
+                int code = conn.getResponseCode();
+                if (code == HttpURLConnection.HTTP_MOVED_PERM || code == HttpURLConnection.HTTP_MOVED_TEMP) {
+                    String redirectUrl = conn.getHeaderField("Location");
+                    url = new URL(redirectUrl);
+                    conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("GET");
+                    conn.connect();
+                }
 
                 File cacheDir = activity.getExternalFilesDir(null);
                 if (cacheDir == null) cacheDir = activity.getCacheDir();

@@ -70,6 +70,11 @@ public class EvaCardActivity extends AppCompatActivity {
         dashboardRamText = findViewById(R.id.dashboardRamText);
         dashboardStorageText = findViewById(R.id.dashboardStorageText);
 
+        Button btnCheckUpdate = findViewById(R.id.btnCheckUpdate);
+        if (btnCheckUpdate != null) {
+            btnCheckUpdate.setOnClickListener(v -> new UpdateManager().checkForUpdates(this, true));
+        }
+
         LinearLayout panelWeather = findViewById(R.id.panelWeatherCard);
         LinearLayout panelClock = findViewById(R.id.panelClockCard);
         LinearLayout panelTrending = findViewById(R.id.panelTrendingCard);
@@ -89,7 +94,7 @@ public class EvaCardActivity extends AppCompatActivity {
         refreshSystemStats();
 
         // Check for GitHub updates asynchronously
-        new UpdateManager().checkForUpdates(this);
+        new UpdateManager().checkForUpdates(this, false);
     }
 
     private void setupPanelFocusAndClick(View panel, Runnable onClick) {
