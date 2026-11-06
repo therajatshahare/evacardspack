@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.StatFs;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.ViewGroup;
@@ -21,11 +22,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
 
 public class EvaCardActivity extends AppCompatActivity {
@@ -37,7 +39,7 @@ public class EvaCardActivity extends AppCompatActivity {
     private TextView dashboardStorageText;
 
     private boolean isShowingTvShows = false;
-    private int currentCalendarMonth = Calendar.MAY; // Default to May or Current Month
+    private int currentCalendarMonth = Calendar.MAY;
 
     // World Clock Dialog Views
     private Dialog clockDialog;
@@ -187,13 +189,12 @@ public class EvaCardActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    // 4. Buddhist & Neo-Buddhist 12-Month Interactive Calendar Dialog
+    // 4. Buddhist & Neo-Buddhist 7-Column Monthly Calendar Grid Dialog
     private void showCalendarDetailDialog() {
         Dialog dialog = createStyledDialog(R.layout.dialog_calendar_detail);
 
         TextView monthTitleText = dialog.findViewById(R.id.monthTitleText);
-        TextView monthSubTitleText = dialog.findViewById(R.id.monthSubTitleText);
-        LinearLayout eventsContainer = dialog.findViewById(R.id.calendarEventsContainer);
+        LinearLayout gridContainer = dialog.findViewById(R.id.monthGridContainer);
         Button btnPrevMonth = dialog.findViewById(R.id.btnPrevMonth);
         Button btnNextMonth = dialog.findViewById(R.id.btnNextMonth);
         Button btnClose = dialog.findViewById(R.id.btnCloseCalendar);
@@ -201,9 +202,9 @@ public class EvaCardActivity extends AppCompatActivity {
         Calendar cal = Calendar.getInstance();
         currentCalendarMonth = cal.get(Calendar.MONTH);
 
-        Runnable renderMonthEvents = () -> {
-            if (eventsContainer == null) return;
-            eventsContainer.removeAllViews();
+        Runnable renderMonthGrid = () -> {
+            if (gridContainer == null) return;
+            gridContainer.removeAllViews();
 
             String[] monthNames = {"JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
                     "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"};
@@ -212,32 +213,67 @@ public class EvaCardActivity extends AppCompatActivity {
                 monthTitleText.setText(monthNames[currentCalendarMonth] + " 2026");
             }
 
-            List<String> events = getBuddhistEventsForMonth(currentCalendarMonth);
-            if (monthSubTitleText != null) {
-                monthSubTitleText.setText(events.size() + " Dhamma & Historic Events");
-            }
+            Calendar c = Calendar.getInstance();
+            c.set(Calendar.YEAR, 2026);
+            c.set(Calendar.MONTH, currentCalendarMonth);
+            c.set(Calendar.DAY_OF_MONTH, 1);
 
-            for (String eventText : events) {
-                TextView tv = new TextView(this);
-                tv.setText(eventText);
-                tv.setTextSize(14);
-                tv.setPadding(0, 8, 0, 8);
-                if (eventText.startsWith("☸️★") || eventText.contains("Buddha Purnima") || eventText.contains("Dhammachakra")) {
-                    tv.setTextColor(Color.parseColor("#F59E0B")); // Amber
-                    tv.setTypeface(null, android.graphics.Typeface.BOLD);
-                } else {
-                    tv.setTextColor(Color.parseColor("#F8FAFC"));
+            int firstDayOfWeek = c.get(Calendar.DAY_OF_WEEK); // 1 = Sun, 2 = Mon ... 7 = Sat
+            int startOffset = (firstDayOfWeek + 5) % 7; // Monday = 0, Sunday = 6
+            int daysInMonth = c.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+            Map<Integer, String> monthEvents = getBuddhistEventsMap(currentCalendarMonth);
+            LayoutInflater inflater = LayoutInflater.from(this);
+
+            int currentDay = 1;
+            int totalCells = startOffset + daysInMonth;
+            int totalRows = (int) Math.ceil(totalCells / 7.0);
+
+            for (int r = 0; r < totalRows; r++) {
+                LinearLayout rowLayout = new LinearLayout(this);
+                rowLayout.setOrientation(LinearLayout.HORIZONTAL);
+                rowLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+                for (int col = 0; col < 7; col++) {
+                    int cellIndex = r * 7 + col;
+                    View cell = inflater.inflate(R.layout.grid_day_cell, rowLayout, false);
+                    TextView dayNumText = cell.findViewById(R.id.cellDayNum);
+                    TextView eventText = cell.findViewById(R.id.cellEventText);
+
+                    if (cellIndex >= startOffset && currentDay <= daysInMonth) {
+                        dayNumText.setText(String.valueOf(currentDay));
+                        String event = monthEvents.get(currentDay);
+
+                        if (event != null) {
+                            eventText.setVisibility(View.VISIBLE);
+                            eventText.setText(event);
+                            dayNumText.setTextColor(Color.parseColor("#F59E0B")); // Amber
+                            cell.setBackgroundColor(Color.parseColor("#1E293B"));
+                        } else {
+                            dayNumText.setTextColor(Color.parseColor("#F8FAFC"));
+                            cell.setBackgroundColor(Color.parseColor("#0F172A"));
+                        }
+
+                        currentDay++;
+                    } else {
+                        // Empty leading or trailing cell
+                        dayNumText.setText("");
+                        cell.setBackgroundColor(Color.parseColor("#090D16"));
+                    }
+
+                    rowLayout.addView(cell);
                 }
-                eventsContainer.addView(tv);
+                gridContainer.addView(rowLayout);
             }
         };
 
-        renderMonthEvents.run();
+        renderMonthGrid.run();
 
         if (btnPrevMonth != null) {
             btnPrevMonth.setOnClickListener(v -> {
                 currentCalendarMonth = (currentCalendarMonth - 1 + 12) % 12;
-                renderMonthEvents.run();
+                renderMonthGrid.run();
             });
             btnPrevMonth.requestFocus();
         }
@@ -245,7 +281,7 @@ public class EvaCardActivity extends AppCompatActivity {
         if (btnNextMonth != null) {
             btnNextMonth.setOnClickListener(v -> {
                 currentCalendarMonth = (currentCalendarMonth + 1) % 12;
-                renderMonthEvents.run();
+                renderMonthGrid.run();
             });
         }
 
@@ -256,71 +292,59 @@ public class EvaCardActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private List<String> getBuddhistEventsForMonth(int month) {
-        List<String> list = new ArrayList<>();
+    private Map<Integer, String> getBuddhistEventsMap(int month) {
+        Map<Integer, String> map = new HashMap<>();
         switch (month) {
             case Calendar.JANUARY:
-                list.add("☸️ 1 Jan — New Year Dhamma Vandana & World Peace Day");
-                list.add("☸️ 15 Jan — Duruthu Poya (Buddha's First Visit to Sri Lanka)");
-                list.add("☸️ 26 Jan — Republic Day & Babasaheb Ambedkar's Constitutional Legacy");
+                map.put(1, "New Year Vandana");
+                map.put(15, "Duruthu Poya");
+                map.put(26, "Republic Day");
                 break;
             case Calendar.FEBRUARY:
-                list.add("☸️★ Magha Purnima (Full Moon) — Assembly of 1,250 Arahants at Veluvana");
-                list.add("☸️ Ovada Patimokkha Discourse by Gautama Buddha");
-                list.add("☸️ Venerable Sariputta Mahathera Parinirvana Memorial Day");
+                map.put(15, "Magha Purnima (1250 Arahants)");
+                map.put(24, "Ovada Patimokkha");
                 break;
             case Calendar.MARCH:
-                list.add("☸️ 15 Mar — Samata Sainik Dal Foundation Day (Dr. B. R. Ambedkar, 1927)");
-                list.add("☸️★ 20 Mar — Mahad Satyagraha Day (Water Rights & Social Equality)");
-                list.add("☸️ Medin Poya — Buddha's First Return Visit to Kapilavastu");
+                map.put(15, "Samata Sainik Dal");
+                map.put(20, "Mahad Satyagraha ⭐");
                 break;
             case Calendar.APRIL:
-                list.add("☸️★ 14 Apr — Dr. B. R. Ambedkar Jayanti (Birth Anniversary of Babasaheb)");
-                list.add("☸️ Bak Poya — Buddha's Second Visit to Sri Lanka");
-                list.add("☸️ Chaitra Full Moon Sacred Dhamma Vandana");
+                map.put(14, "Dr. Ambedkar Jayanti ⭐");
+                map.put(23, "Chaitra Purnima");
                 break;
             case Calendar.MAY:
-                list.add("☸️★ Buddha Purnima (Vesak Full Moon) — Birth, Enlightenment & Parinirvana of Gautama Buddha");
-                list.add("☸️ 27 May — Ramabai Ambedkar Memorial Day");
-                list.add("☸️ Vesak International Dhamma Week");
+                map.put(23, "Buddha Purnima (Vesak) ⭐");
+                map.put(27, "Ramabai Ambedkar Day");
                 break;
             case Calendar.JUNE:
-                list.add("☸️ Poson Poya — Arrival of Arahant Mahinda & Establishment of Dhamma in Lanka");
-                list.add("☸️ 20 Jun — Siddharth College Foundation Day (Dr. B. R. Ambedkar, Mumbai 1946)");
-                list.add("☸️ Great Renunciation (Mahabhinishkramana) Memorial");
+                map.put(20, "Siddharth College Day");
+                map.put(21, "Poson Poya");
                 break;
             case Calendar.JULY:
-                list.add("☸️★ Asalha Puja (Dhamma Day Full Moon) — First Sermon at Sarnath (Dhammacakkappavattana Sutta)");
-                list.add("☸️ Commencement of Vassa (Rains Retreat for Sangha)");
-                list.add("☸️ Conception of Bodhisattva Siddhattha");
+                map.put(21, "Asalha Puja (Dhamma Day) ⭐");
+                map.put(22, "Vassa Commencement");
                 break;
             case Calendar.AUGUST:
-                list.add("☸️ Nikini Poya — Convocation of the First Buddhist Council at Rajgir");
-                list.add("☸️ Ven. Mahakassapa & Ven. Ananda Preservation of Tipitaka");
-                list.add("☸️ Mid-Vassa Meditation & Dhamma Study Season");
+                map.put(19, "Nikini Poya (First Council)");
                 break;
             case Calendar.SEPTEMBER:
-                list.add("☸️ Madhu Purnima (Honey Full Moon) — Festival of Unity & Parileyyaka Offering");
-                list.add("☸️ Rahula Day — Novice Ordination Anniversary");
-                list.add("☸️ 24 Sep — Poona Pact Historic Day (1932)");
+                map.put(17, "Madhu Purnima");
+                map.put(24, "Poona Pact Day");
                 break;
             case Calendar.OCTOBER:
-                list.add("☸️★ 14 Oct — Dhammachakra Pravartan Din (Deekshabhoomi, Nagpur Mass Conversion 1956)");
-                list.add("☸️ Pavarana Poya — End of Vassa (Rains Retreat)");
-                list.add("☸️ Commencement of Kathina Civara Dana Season");
+                map.put(14, "Dhammachakra Pravartan Din ⭐");
+                map.put(25, "Pavarana (Vassa End)");
                 break;
             case Calendar.NOVEMBER:
-                list.add("☸️ Kathina Civara Dana — Robe Offering Festival & Sangha Support");
-                list.add("☸️ Il Poya — Commissioning of First 60 Arahant Missionaries by Buddha");
-                list.add("☸️ 26 Nov — Constitution Day of India (Drafted by Dr. B. R. Ambedkar)");
+                map.put(15, "Kathina / Il Poya");
+                map.put(26, "Constitution Day");
                 break;
             case Calendar.DECEMBER:
-                list.add("☸️★ 6 Dec — Mahaparinirvan Din (Memorial Day of Bodhisattva Dr. B. R. Ambedkar)");
-                list.add("☸️ 15 Dec — Sanghamitta Day (Arrival of Sacred Bodhi Sapling)");
-                list.add("☸️ Unduvap Poya — Plant of Sacred Sri Maha Bodhi Tree");
+                map.put(6, "Mahaparinirvan Din ⭐");
+                map.put(15, "Sanghamitta Day");
                 break;
         }
-        return list;
+        return map;
     }
 
     private Dialog createStyledDialog(int layoutResId) {
