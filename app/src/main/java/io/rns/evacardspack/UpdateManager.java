@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import javax.net.ssl.HttpsURLConnection;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -42,14 +43,24 @@ public class UpdateManager {
         }
 
         executor.execute(() -> {
+            // Force IPv4 socket resolution on Android TV stacks to prevent socket EPERM
+            try {
+                System.setProperty("java.net.preferIPv4Stack", "true");
+                System.setProperty("java.net.preferIPv6Addresses", "false");
+            } catch (Exception ignored) {
+            }
+
             try {
                 URL url = new URL(LATEST_RELEASE_URL);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                if (conn instanceof HttpsURLConnection) {
+                    ((HttpsURLConnection) conn).setInstanceFollowRedirects(true);
+                }
                 conn.setRequestMethod("GET");
                 conn.setRequestProperty("Accept", "application/vnd.github.v3+json");
-                conn.setRequestProperty("User-Agent", "EvaCardsPack");
-                conn.setConnectTimeout(8000);
-                conn.setReadTimeout(8000);
+                conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)");
+                conn.setConnectTimeout(10000);
+                conn.setReadTimeout(10000);
 
                 int responseCode = conn.getResponseCode();
                 if (responseCode == 200) {
@@ -175,10 +186,13 @@ public class UpdateManager {
             try {
                 URL url = new URL(downloadUrl);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                if (conn instanceof HttpsURLConnection) {
+                    ((HttpsURLConnection) conn).setInstanceFollowRedirects(true);
+                }
                 conn.setRequestMethod("GET");
+                conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)");
                 conn.setConnectTimeout(15000);
                 conn.setReadTimeout(15000);
-                conn.setInstanceFollowRedirects(true);
                 conn.connect();
 
                 // Handle redirects if HTTP 301/302
@@ -187,6 +201,9 @@ public class UpdateManager {
                     String redirectUrl = conn.getHeaderField("Location");
                     url = new URL(redirectUrl);
                     conn = (HttpURLConnection) url.openConnection();
+                    if (conn instanceof HttpsURLConnection) {
+                        ((HttpsURLConnection) conn).setInstanceFollowRedirects(true);
+                    }
                     conn.setRequestMethod("GET");
                     conn.connect();
                 }
