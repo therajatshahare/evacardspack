@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
+import android.provider.Settings;
 import android.view.Window;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,6 +29,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -224,7 +229,13 @@ public class UpdateManager {
                 outputStream.close();
                 inputStream.close();
 
-                activity.runOnUiThread(() -> installApk(activity, apkFile));
+                if (apkFile.exists() && apkFile.length() > 1000) {
+                    activity.runOnUiThread(() -> installApk(activity, apkFile));
+                } else {
+                    activity.runOnUiThread(() ->
+                        Toast.makeText(activity, "Downloaded APK is invalid or incomplete.", Toast.LENGTH_LONG).show()
+                    );
+                }
             } catch (Exception e) {
                 activity.runOnUiThread(() ->
                     Toast.makeText(activity, "Download failed: " + e.getMessage(), Toast.LENGTH_LONG).show()
@@ -234,14 +245,40 @@ public class UpdateManager {
     }
 
     private void installApk(Context context, File apkFile) {
-        if (!apkFile.exists()) return;
+        if (!apkFile.exists() || apkFile.length() <= 0) {
+            Toast.makeText(context, "APK file is missing.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (!context.getPackageManager().canRequestPackageInstalls()) {
+                Toast.makeText(context, "Enable 'Install Unknown Apps' permission for Eva Cards Pack", Toast.LENGTH_LONG).show();
+                try {
+                    Intent manageIntent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES);
+                    manageIntent.setData(Uri.parse("package:" + context.getPackageName()));
+                    manageIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(manageIntent);
+                } catch (Exception e) {
+                    Toast.makeText(context, "Please allow unknown app installation in TV Settings", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+        }
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
         Uri apkUri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileprovider", apkFile);
 
         intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        List<ResolveInfo> resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        for (ResolveInfo resolveInfo : resInfoList) {
+            String packageName = resolveInfo.activityInfo.packageName;
+            context.grantUriPermission(packageName, apkUri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        }
 
         try {
             context.startActivity(intent);
