@@ -68,11 +68,13 @@ public class EvaCardActivity extends AppCompatActivity {
         LinearLayout panelWeather = findViewById(R.id.panelWeatherCard);
         LinearLayout panelClock = findViewById(R.id.panelClockCard);
         LinearLayout panelTrending = findViewById(R.id.panelTrendingCard);
+        LinearLayout panelCalendar = findViewById(R.id.panelCalendarCard);
         LinearLayout panelSystemMonitor = findViewById(R.id.panelSystemMonitorCard);
 
         setupPanelFocusAndClick(panelWeather, this::showWeatherDetailDialog);
         setupPanelFocusAndClick(panelClock, this::showClockDetailDialog);
         setupPanelFocusAndClick(panelTrending, this::showTrendingDetailDialog);
+        setupPanelFocusAndClick(panelCalendar, this::showCalendarDetailDialog);
         setupPanelFocusAndClick(panelSystemMonitor, this::cleanMemoryAndRefresh);
 
         if (panelWeather != null) {
@@ -179,6 +181,17 @@ public class EvaCardActivity extends AppCompatActivity {
             btnClose.setOnClickListener(v -> dialog.dismiss());
         }
 
+        dialog.show();
+    }
+
+    // 4. Buddhist & Neo-Buddhist Calendar Detail Dialog
+    private void showCalendarDetailDialog() {
+        Dialog dialog = createStyledDialog(R.layout.dialog_calendar_detail);
+        Button btnClose = dialog.findViewById(R.id.btnCloseCalendar);
+        if (btnClose != null) {
+            btnClose.setOnClickListener(v -> dialog.dismiss());
+            btnClose.requestFocus();
+        }
         dialog.show();
     }
 

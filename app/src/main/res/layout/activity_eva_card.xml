@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0F172A"
+    android:clipChildren="false"
+    android:clipToPadding="false"
     android:orientation="vertical"
     android:padding="32dp">
 
@@ -12,32 +14,36 @@
         android:layout_height="wrap_content"
         android:text="Eva Cards Pack Dashboard"
         android:textColor="#F8FAFC"
-        android:textSize="28sp"
+        android:textSize="26sp"
         android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Use TV Remote D-Pad (Left/Right) to navigate. Press OK on System Monitor to Boost RAM."
+        android:text="Use TV Remote D-Pad (Left/Right) to navigate between widgets"
         android:textColor="#94A3B8"
-        android:textSize="16sp" />
+        android:textSize="15sp" />
 
-    <!-- Cards Row (4 Columns) -->
+    <!-- Cards Row (5 Columns) with clipChildren=false and padding for focus border -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:layout_weight="1"
         android:baselineAligned="false"
-        android:orientation="horizontal">
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:paddingVertical="12dp">
 
         <!-- Weather Card Panel -->
         <LinearLayout
             android:id="@+id/panelWeatherCard"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="6dp"
             android:layout_weight="1"
             android:background="@drawable/glass_card_selector"
             android:clickable="true"
@@ -47,38 +53,38 @@
             android:nextFocusLeft="@+id/panelWeatherCard"
             android:nextFocusRight="@+id/panelClockCard"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="12dp">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
                 android:contentDescription="Weather"
                 android:src="@drawable/ic_weather_banner" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="10dp"
                 android:text="Weather Live"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="4dp"
                 android:text="26°C Sunny · Nagpur"
                 android:textColor="#3B82F6"
-                android:textSize="14sp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:text="Humidity: 45% · Wind: 12 km/h"
                 android:textColor="#64748B"
-                android:textSize="11sp" />
+                android:textSize="10sp" />
         </LinearLayout>
 
         <!-- Minimal Clock Card Panel -->
@@ -97,11 +103,11 @@
             android:nextFocusLeft="@+id/panelWeatherCard"
             android:nextFocusRight="@+id/panelTrendingCard"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="12dp">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
                 android:contentDescription="Clock"
                 android:src="@drawable/ic_clock_banner" />
 
@@ -109,28 +115,28 @@
                 android:id="@+id/clockTimeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="10dp"
                 android:text="07:30 PM"
                 android:textColor="#4ADE80"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/clockDateText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="4dp"
                 android:text="Thursday, 5 November"
                 android:textColor="#94A3B8"
-                android:textSize="13sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:text="Timezone: Asia/Kolkata"
                 android:textColor="#64748B"
-                android:textSize="11sp" />
+                android:textSize="10sp" />
         </LinearLayout>
 
         <!-- Trending Card Panel -->
@@ -147,48 +153,49 @@
             android:focusable="true"
             android:gravity="center"
             android:nextFocusLeft="@+id/panelClockCard"
-            android:nextFocusRight="@+id/panelSystemMonitorCard"
+            android:nextFocusRight="@+id/panelCalendarCard"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="12dp">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
                 android:contentDescription="Trending"
                 android:src="@drawable/ic_trending_banner" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="10dp"
                 android:text="Trending"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="4dp"
                 android:text="Top Pick: Interstellar"
                 android:textColor="#EAB308"
-                android:textSize="14sp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:text="Rating: ⭐ 8.7/10 · Sci-Fi"
                 android:textColor="#64748B"
-                android:textSize="11sp" />
+                android:textSize="10sp" />
         </LinearLayout>
 
-        <!-- System Monitor Card Panel -->
+        <!-- Calendar Card Panel -->
         <LinearLayout
-            android:id="@+id/panelSystemMonitorCard"
+            android:id="@+id/panelCalendarCard"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
             android:layout_weight="1"
             android:background="@drawable/glass_card_selector"
             android:clickable="true"
@@ -198,48 +205,98 @@
             android:nextFocusLeft="@+id/panelTrendingCard"
             android:nextFocusRight="@+id/panelSystemMonitorCard"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="12dp">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:contentDescription="Calendar"
+                android:src="@drawable/ic_calendar_banner" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Calendar"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Buddha Jayanti"
+                android:textColor="#F59E0B"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Buddhist &amp; Dhamma Days"
+                android:textColor="#64748B"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <!-- System Monitor Card Panel -->
+        <LinearLayout
+            android:id="@+id/panelSystemMonitorCard"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="6dp"
+            android:layout_weight="1"
+            android:background="@drawable/glass_card_selector"
+            android:clickable="true"
+            android:descendantFocusability="blocksDescendants"
+            android:focusable="true"
+            android:gravity="center"
+            android:nextFocusLeft="@+id/panelCalendarCard"
+            android:nextFocusRight="@+id/panelSystemMonitorCard"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <ImageView
+                android:layout_width="44dp"
+                android:layout_height="44dp"
                 android:contentDescription="System Monitor"
                 android:src="@drawable/ic_storage_banner" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="10dp"
                 android:text="System Monitor"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/dashboardRamText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="4dp"
                 android:text="RAM: 62% Used"
                 android:textColor="#8B5CF6"
-                android:textSize="14sp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/dashboardStorageText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="2dp"
                 android:text="Storage: 45% Used"
                 android:textColor="#94A3B8"
-                android:textSize="12sp" />
+                android:textSize="11sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="⚡ Click OK to Boost RAM"
+                android:layout_marginTop="8dp"
+                android:text="⚡ Click to Boost"
                 android:textColor="#8B5CF6"
-                android:textSize="11sp"
+                android:textSize="10sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
