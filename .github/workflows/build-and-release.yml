@@ -4,6 +4,9 @@ on:
   push:
     tags:
       - 'v*'
+    branches:
+      - 'main'
+  workflow_dispatch:
 
 jobs:
   build-and-release:
@@ -27,18 +30,19 @@ jobs:
       - name: Build Release APK
         run: ./gradlew app:assembleRelease
 
-      - name: Rename Release APK
+      - name: Create Release Artifacts
         run: |
           mkdir -p release-output
-          cp app/build/outputs/apk/release/app-release.apk release-output/evacardspack-${{ github.ref_name }}.apk
+          cp app/build/outputs/apk/release/app-release.apk release-output/evacardspack-v3.0.0.apk
 
       - name: Create GitHub Release and Upload APK
         uses: softprops/action-gh-release@v1
         with:
-          files: release-output/evacardspack-${{ github.ref_name }}.apk
-          name: "Eva Cards Pack ${{ github.ref_name }}"
+          files: release-output/evacardspack-v3.0.0.apk
+          tag_name: v3.0.0
+          name: "Eva Cards Pack v3.0.0 (Stable Release)"
           body: |
-            Official Release ${{ github.ref_name }} of Eva Cards Pack for Eva Launcher on Android TV!
+            Official Release v3.0.0 of Eva Cards Pack for Eva Launcher on Android TV!
             
             ### Highlights
             - 5 Module Cards (Weather Live, Minimal Clock, Trending, Calendar, System Monitor)
